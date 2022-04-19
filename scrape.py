@@ -44,6 +44,11 @@ class Options:
 
         return time_diff
 
+
 test = Options("nflx","call")
 print(test.getTimeDiff())
 
+
+few_days = si.get_data('msft' , start_date = '01/01/1999' , end_date = '01/10/1999', interval = "1wk")
+
+print(few_days)
