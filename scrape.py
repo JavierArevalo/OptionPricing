@@ -1,7 +1,7 @@
 from yahoo_fin import options
 from yahoo_fin import stock_info as si
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
+from datetime import timedelta
 
 class Options:
     def __init__(self, ticker,type):
@@ -45,10 +45,19 @@ class Options:
         return time_diff
 
 
+def getStockPrice(ticker,date):
+
+    startDate = date 
+    startDate = startDate.strftime("%d/%m/%Y")
+    endDate = date +  timedelta(days=1)
+    endDate = endDate.strftime("%d/%m/%Y")
+    few_days = si.get_data('AAPL' , start_date = startDate , end_date = endDate)
+    val = float(few_days["adjclose"])
+
+    return val
+
 test = Options("nflx","call")
 print(test.getTimeDiff())
+time = datetime.strptime("18/04/2022", "%d/%m/%Y")
+print(getStockPrice("AAPL",time))
 
-
-few_days = si.get_data('msft' , start_date = '01/01/1999' , end_date = '01/10/1999', interval = "1wk")
-
-print(few_days)
