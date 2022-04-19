@@ -3,10 +3,17 @@ from yahoo_fin import stock_info as si
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-class Calls:
-    def __init__(self, ticker):
+class Options:
+    def __init__(self, ticker,type):
         dates = options.get_expiration_dates(ticker)
-        Option = options.get_calls("nflx",dates[0])
+        
+        if type == "call":
+            Option = options.get_calls("nflx",dates[0])
+
+        if type == "put":
+            Option = options.get_puts("nflx",dates[0])
+ 
+        self.type = type
         self.ticker = ticker
         self.S = si.get_live_price(ticker) # Stock Price
         self.K = Option.loc[0,"Strike"] #Strike Price
@@ -37,6 +44,6 @@ class Calls:
 
         return time_diff
 
-test = Calls("nflx")
+test = Options("nflx","call")
 print(test.getTimeDiff())
 
